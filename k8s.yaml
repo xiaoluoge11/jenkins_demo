@@ -13,4 +13,4 @@ spec:
         imagePullPolicy: IfNotPresent
         name: jenkins-demo
         ports:
-        - containerPort: 3000
+        - containerPort: 80
