@@ -1,33 +1,16 @@
-apiVersion: apps/v1beta1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: nginx-deploy
+  name: jenkins-demo
 spec:
   template:
     metadata:
       labels:
-        app: nginx
+        app: jenkins-demo
     spec:
       containers:
-      - name: nginx
-        image: devops/jenkins-demo:<BUILD_TAG>
+      - image: devops/jenkins-demo:<BUILD_TAG>
+        imagePullPolicy: IfNotPresent
+        name: jenkins-demo
         ports:
-        - containerPort: 80
-
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: nginx
-  labels:
-    app: nginx
-spec:
-  selector:
-    app: nginx
-  type: NodePort
-  ports:
-  - name: web
-    port: 80
-    targetPort: web
-    nodePort: 3000
+        - containerPort: 3000
