@@ -1,16 +1,17 @@
+---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: jenkins-demo
+  name: kube100-site
 spec:
+  replicas: 2
   template:
     metadata:
       labels:
-        app: jenkins-demo
+        app: web
     spec:
       containers:
-      - image: devops/jenkins-demo:<BUILD_TAG>
-        imagePullPolicy: IfNotPresent
-        name: jenkins-demo
-        ports:
-        - containerPort: 80
+        - name: front-end
+          image: nginx
+          ports:
+            - containerPort: 80
