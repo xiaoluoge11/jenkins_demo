@@ -1,17 +1,32 @@
----
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: kube100-site
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  labels:
+    app: nginx
+  name: nginx
+  namespace: kube-ops
 spec:
-  replicas: 2
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
   template:
-    metadata:
+    metadata: 
       labels:
-        app: web
+        app: nginx
     spec:
       containers:
-        - name: front-end
-          image: nginx
-          ports:
-            - containerPort: 80
+      - image: nginx
+        imagePullPolicy: Always
+        name: nginx
+        resources: {}
+        terminationMessagePolicy: File
+      restartPolicy: Always
+      schedulerName: default-scheduler 
