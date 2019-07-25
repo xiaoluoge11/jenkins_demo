@@ -47,3 +47,4 @@ node('haimaxy-jnlp') {
         }
         sh "kubectl apply -f k8s.yaml"
     }
+}
