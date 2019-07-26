@@ -1,6 +1,6 @@
 node('haimaxy-jnlp') {
      //服务名称
-     def service_name = "jenkins_demo"
+     def service_name = "online"
      stage('Prepare') {
         echo "1.Prepare Stage"
         checkout scm
