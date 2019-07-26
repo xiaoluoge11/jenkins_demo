@@ -27,6 +27,9 @@ node('haimaxy-jnlp') {
     }
     stage('Deploy') {
       echo "5. Deploy Stage"
+      when {
+                branch 'development' 
+            }
       def userInput = input(
             id: 'userInput',
             message: 'Choose a deploy environment',
@@ -51,4 +54,34 @@ node('haimaxy-jnlp') {
         }
         sh "kubectl apply -f k8s.yaml"
     }
+   stage('Deploy') {
+      echo "5. Deploy Stage"
+      when {
+                branch 'master'
+            }   
+      def userInput = input(
+            id: 'userInput',
+            message: 'Choose a deploy environment',
+            parameters: [
+                [
+                    $class: 'ChoiceParameterDefinition',
+                    choices: "Dev\nQA\nProd",
+                    name: 'Env'
+                ]   
+            ]   
+        )   
+        echo "This is a deploy step to ${userInput}"
+        sh "sed -i 's/<BUILD_TAG>/${build_tag}/' k8s.yaml"
+        sh "sed -i 's/<SERVICE_NAME>/${service_name}/' k8s.yaml"
+        sh "cat k8s.yaml"
+        if (userInput == "Dev") {
+            // deploy dev stuff 
+        } else if (userInput == "QA"){
+            // deploy qa stuff
+        } else {
+            // deploy prod stuff
+        }   
+        sh "kubectl apply -f k8s.yaml"
+    }  
+
 }
