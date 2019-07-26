@@ -17,7 +17,7 @@ spec:
         app: <SERVICE_NAME>
     spec:
       containers:
-      - image: 192.168.1.27/devops/<SERVICE_NAME>:<BUILD_TAG>
+      - image: 192.168.1.27/devops/jenkins-demo:<BUILD_TAG>
         name: <SERVICE_NAME>
         ports:
         - name: web
