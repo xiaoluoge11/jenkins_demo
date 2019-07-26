@@ -33,7 +33,7 @@ node('haimaxy-jnlp') {
             parameters: [
                 [
                     $class: 'ChoiceParameterDefinition',
-                    choices: 生产环境\n测试环境\n回滚代码",
+                    choices: "生产环境\n测试环境\n回滚代码",
                     name: 'Env'
                 ]
             ]
