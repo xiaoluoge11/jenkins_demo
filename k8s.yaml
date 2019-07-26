@@ -1,13 +1,10 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: jenkins-demo
+  name: <SERVICE_NAME>
   namespace: kube-ops
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: jenkins-demo
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -16,13 +13,28 @@ spec:
   template:
     metadata: 
       labels:
-        app: jenkins-demo
+        app: <SERVICE_NAME>
     spec:
       containers:
       - image: 192.168.1.27/devops/jenkins-demo:<BUILD_TAG>
         imagePullPolicy: Always
-        name: jenkins-demo
+        name: <SERVICE_NAME>
         resources: {}
         terminationMessagePolicy: File
       restartPolicy: Always
-      schedulerName: default-scheduler 
+      schedulerName: default-scheduler
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: <SERVICE_NAME>
+spec:
+  selector:
+    app: <SERVICE_NAME>
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: web
+    nodePort: 30000
+    name: <SERVICE_NAME>
