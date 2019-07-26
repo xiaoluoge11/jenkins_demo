@@ -1,5 +1,5 @@
 pipeline {
- node('haimaxy-jnlp') {
+ agent('haimaxy-jnlp') {
      //服务名称
      def service_name = "online"
      stages {
